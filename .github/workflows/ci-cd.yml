@@ -10,6 +10,8 @@ jobs:
         run: |
           apt-get update
           apt-get install -y sqlite3
+      - name: Download Go dependencies
+        run: go mod download
       - name: Create test database
         run: |
           sqlite3 tracker.db "CREATE TABLE IF NOT EXISTS parcel (
@@ -33,6 +35,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+      - name: Download Go dependencies
+        run: go mod download
       - name: Install sqlite3
         run: |
           sudo apt-get update
